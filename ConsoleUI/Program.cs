@@ -1,21 +1,23 @@
 ﻿using Business.Concrete;
+using DataAccess.Abstract;
 using DataAccess.Concrete;
+using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using System;
 using System.Net.Http.Headers;
 
 namespace ConsoleUI
 {
-    internal class Program
+    public class Program
     {
-
         static void Main(string[] args)
-
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
-            foreach ( var car in carManager.GetAll())
+            CarManager carManager = new CarManager(new EfCarDal());
+           
+            foreach (var car in carManager.GetAllByColorId(2))
             {
-                Console.WriteLine(car.CarId + " " + car.Description);
-            }           
+                Console.WriteLine(car.Description);
+            }
         }
     }
 }

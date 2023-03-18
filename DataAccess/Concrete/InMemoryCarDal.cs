@@ -3,6 +3,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete
@@ -23,7 +24,6 @@ namespace DataAccess.Concrete
                 new Car {CarId=5,BrandId=5,ColorId=1,DailyPrice=1280,ModelYear="2022",Description="Ford Tourneo Courier"},
             };
         }
-
         public void Add(Car car)
         {
             _cars.Add(car);
@@ -31,8 +31,13 @@ namespace DataAccess.Concrete
 
         public void Delete(Car car)
         {
-            Car carDelete = _cars.SingleOrDefault(c => c.CarId == car.CarId);
-            _cars.Remove(carDelete);
+            Car carToDelete = _cars.SingleOrDefault(c => c.CarId == car.CarId);
+            _cars.Remove(carToDelete);
+        }
+
+        public Car Get(Expression<Func<Car, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Car> GetAll()
@@ -40,20 +45,26 @@ namespace DataAccess.Concrete
             return _cars;
         }
 
-        public List<Car> GetById(int Id)
+        public List<Car> GetAll(int brandId)
         {
-            return _cars.Where(c => c.CarId == Id).ToList();
+            return _cars.Where(c => c.BrandId == brandId).ToList();
+        }
+
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Car car)
         {
-            Car carUpdate = _cars.SingleOrDefault(car => car.CarId == car.CarId);
-
-            carUpdate.CarId = car.CarId;
-            carUpdate.BrandId = car.BrandId;
-            carUpdate.ColorId = car.ColorId;
-            carUpdate.ModelYear = car.ModelYear;
-            carUpdate.Description = car.Description;
+            Car carToUpdate = _cars.SingleOrDefault(c => c.CarId == car.CarId);
+            carToUpdate.DailyPrice = car.DailyPrice;
+            carToUpdate.ModelYear = car.ModelYear;
+            carToUpdate.ColorId = car.ColorId;
+            carToUpdate.BrandId = car.BrandId;
+            carToUpdate.Description = car.Description;
         }
+
+
     }
 }
