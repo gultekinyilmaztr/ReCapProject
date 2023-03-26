@@ -60,7 +60,7 @@ namespace ConsoleUI
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
 
-            foreach (var brand in brandManager.GetAll())
+            foreach (var brand in brandManager.GetAll().Data)
             {
                 Console.WriteLine(brand.BrandName);
             }
